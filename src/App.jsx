@@ -17,6 +17,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/game' element={<Game />} />
+          <Route path='/game/:word' element={<Game />} />
         </Routes>
       </Router>
     </>
