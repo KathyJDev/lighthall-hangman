@@ -39,13 +39,13 @@ const Modal = (props) => {
           props.onClose();
           setChallengeButton(false);
         }} className="close">&times;</span>
-        <div className={challengeButton === true && "hidden"}>
+        <div class={challengeButton === true && "hidden"}>
           <h2>Set a challenge for your friends</h2>
           <input onChange={saveUserWord} autoComplete='off' name='userWord' placeholder='Enter a word' />
           <button onClick={challengeButtonHandler}>Set</button>
         </div>
 
-        <div className={challengeButton === false && "hidden"}>
+        <div class={challengeButton === false && "hidden"}>
         <h1>Copy this link and share with your friends</h1>
         <input type="text" value={`${window.location.origin}/game/${uniqueId}`} readOnly />
           <button onClick={copyLink}>Copy Link</button>

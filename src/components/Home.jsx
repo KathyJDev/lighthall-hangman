@@ -27,7 +27,7 @@ const Home = () => {
       <h1>Welcome to Hangman!</h1>
       <h2>Enter your name and press Start</h2>
       <input onChange={saveName} autoComplete='off' name='name' placeholder='Enter your name' />
-      <button type='button' onClick={handleSetName}><Link to='/game'>Start</Link></button>
+      <button type='button' onClick={handleSetName}><Link to={{pathname: '/game', search: `?name=${name}` }}>Start</Link></button>
 
     </div>
   )

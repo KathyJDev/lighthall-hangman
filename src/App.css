@@ -152,9 +152,21 @@ a{
 .leaderboard-container{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 50%;
   width: 100%;
+}
+
+.leaderboard-container  div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 50%;
+}
+
+.leaderboard-container  div:first-child {
+  align-items: flex-end;
 }
 
 /* Keyboard css */

@@ -7,7 +7,7 @@ import Popup from './Popup';
 import Notification from './Notification';
 import { showNotification as show, checkWin } from '../helpers/helpers';
 import Keyboard from './Keyboard';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { db } from '../../firebase-config.js';
 import { doc, getDoc } from 'firebase/firestore';
 import Modal from './Modal';
@@ -25,6 +25,10 @@ const Game = () => {
   const [wrongLetters, setWrongLetters] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
   const [selectedWord, setSelectedWord] = useState('');
+
+  // fetch name for leaderboard update
+  const location = useLocation();
+  const name = new URLSearchParams(location.search).get('name');
 
   const { id } = useParams();
 
@@ -95,7 +99,7 @@ const Game = () => {
         <WrongLetters wrongLetters={wrongLetters} />
         <Word selectedWord={selectedWord} correctLetters={correctLetters} />
       </div>
-      <Popup correctLetters={correctLetters} wrongLetters={wrongLetters} selectedWord={selectedWord} setPlayable={setPlayable} playAgain={playAgain} />
+      <Popup correctLetters={correctLetters} wrongLetters={wrongLetters} selectedWord={selectedWord} setPlayable={setPlayable} playAgain={playAgain} name={name} />
       <Notification showNotification={showNotification} />
       <button><Link to='/leaderboard'>View Leaderboard</Link></button>
       <button onClick={toggleModal}>Challenge a Friend!</button>
