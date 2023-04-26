@@ -30,11 +30,11 @@ const Leaderboard = () => {
         <div><h2>Name</h2></div>
         <div><h2>Wins</h2></div>
       </div>
-      {leaderboardData.map((user, index) => (
-      <div className='leaderboard-container' key={user.id}>
-      <div>{index + 1}. {user.name}</div>
-      <div>{user.wins}</div>
-      </div>
+      {leaderboardData.map(user => (
+        <div className='leaderboard-container' key={user.id}>
+          <div>{user.name}</div>
+          <div>{user.wins}</div>
+        </div>
       ))}
       <button><Link to='/'>Back to Homepage</Link></button>
     </div>
