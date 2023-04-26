@@ -7,19 +7,15 @@ import Popup from './Popup';
 import Notification from './Notification';
 import { showNotification as show, checkWin } from '../helpers/helpers';
 import Keyboard from './Keyboard';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
+import { db } from '../../firebase-config.js';
+import { doc, getDoc } from 'firebase/firestore';
 import Modal from './Modal';
 
 const words = ["monitor", "program", "application", "keyboard", "javascript", "gaming", "network", 'application', 'programming', 'interface', 'wizard'];
-
-let selectedWord = words[Math.floor(Math.random() * words.length)];
-
+//let selectedWord = words[Math.floor(Math.random() * words.length)];
 
 const Game = () => {
-  const { word } = useParams();
-  if (word) {
-    selectedWord = word;
-  }
 
   // for modal
   const [isOpened, setIsOpened] = useState(false);
@@ -28,6 +24,29 @@ const Game = () => {
   const [correctLetters, setCorrectLetters] = useState([]);
   const [wrongLetters, setWrongLetters] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
+  const [selectedWord, setSelectedWord] = useState('');
+
+  // fetch name for leaderboard update
+  const location = useLocation();
+  const name = new URLSearchParams(location.search).get('name');
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchUserWord = async () => {
+      if (id) {
+        const wordRef = doc(db, 'custom-words', id);
+        const wordDoc = await getDoc(wordRef);
+        if (wordDoc.exists()) {
+          setSelectedWord(wordDoc.data().word);
+        }
+      } else {
+        setSelectedWord(words[Math.floor(Math.random() * words.length)]);
+      }
+    };
+
+    fetchUserWord();
+  }, [id]);
 
   useEffect(() => {
     const handleKeydown = (event) => {
@@ -65,7 +84,7 @@ const Game = () => {
     setWrongLetters([]);
 
     const random = Math.floor(Math.random() * words.length);
-    selectedWord = words[random];
+    setSelectedWord(words[random]);;
   }
 
   function toggleModal() {
@@ -80,7 +99,7 @@ const Game = () => {
         <WrongLetters wrongLetters={wrongLetters} />
         <Word selectedWord={selectedWord} correctLetters={correctLetters} />
       </div>
-      <Popup correctLetters={correctLetters} wrongLetters={wrongLetters} selectedWord={selectedWord} setPlayable={setPlayable} playAgain={playAgain} />
+      <Popup correctLetters={correctLetters} wrongLetters={wrongLetters} selectedWord={selectedWord} setPlayable={setPlayable} playAgain={playAgain} name={name} />
       <Notification showNotification={showNotification} />
       <button><Link to='/leaderboard'>View Leaderboard</Link></button>
       <button onClick={toggleModal}>Challenge a Friend!</button>

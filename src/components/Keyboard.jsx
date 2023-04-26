@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 
 const Keyboard = (props) => {
   const letters = [];
@@ -7,18 +7,29 @@ const Keyboard = (props) => {
     const a = 65;
     const z = 91;
     for (let i = a; i < z; i++) {
-      letters.push((String.fromCharCode(i)).toLowerCase());
+      letters.push(String.fromCharCode(i).toLowerCase());
     }
   }
   generateLetters();
 
   return (
-    <div className='keyboard'>
+    <div className="keyboard">
       {letters.map((letter, index) => {
-        return <button onClick={(letter) => { props.clicked(letter) }} className='keyboard-btn' name={letter} value={letter}>{letter}</button>
+        return (
+          <button
+            onClick={(letter) => {
+              props.clicked(letter);
+            }}
+            className="keyboard-btn"
+            name={letter}
+            value={letter}
+          >
+            {letter}
+          </button>
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
 export default Keyboard;
