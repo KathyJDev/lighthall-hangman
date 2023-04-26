@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../../firebase-config.js';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
+import { toast } from "react-toastify";
 
 const Modal = (props) => {
   const [userWord, setUserWord] = useState("");
@@ -14,21 +15,26 @@ const Modal = (props) => {
   };
 
   async function challengeButtonHandler(event) {
-    event.preventDefault();
-    const wordCollection = collection(db, 'custom-words');
-    const userQuery = query(wordCollection, where('word', '==', userWord));
-    const wordRef = await getDocs(userQuery);
-  
-    if (wordRef.empty) {
-      const docRef = await addDoc(wordCollection, { word: userWord });
-      setUniqueId(docRef.id);
+    if (userWord === "") {
+      toast.error("Please enter a word");
     } else {
-      setUniqueId(wordRef.docs[0].id);
+      event.preventDefault();
+      const wordCollection = collection(db, 'custom-words');
+      const userQuery = query(wordCollection, where('word', '==', userWord));
+      const wordRef = await getDocs(userQuery);
+
+      if (wordRef.empty) {
+        const docRef = await addDoc(wordCollection, { word: userWord });
+        setUniqueId(docRef.id);
+      } else {
+        setUniqueId(wordRef.docs[0].id);
+      }
+      setChallengeButton(!challengeButton);
     }
-    setChallengeButton(!challengeButton);
   };
 
   function copyLink() {
+    toast.info("Copied!");
     navigator.clipboard.writeText(`${window.location.origin}/game/${uniqueId}`);
   }
 
@@ -46,8 +52,8 @@ const Modal = (props) => {
         </div>
 
         <div class={challengeButton === false && "hidden"}>
-        <h1>Copy this link and share with your friends</h1>
-        <input type="text" value={`${window.location.origin}/game/${uniqueId}`} readOnly />
+          <h1>Copy this link and share with your friends</h1>
+          <input type="text" value={`${window.location.origin}/game/${uniqueId}`} readOnly />
           <button onClick={copyLink}>Copy Link</button>
         </div>
       </div>
