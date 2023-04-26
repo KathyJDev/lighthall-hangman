@@ -72,7 +72,6 @@ const Game = () => {
       window.addEventListener('keydown', handleKeydown);
     } else { };
 
-
     return () => window.removeEventListener('keydown', handleKeydown);
   }, [correctLetters, wrongLetters, playable]);
 

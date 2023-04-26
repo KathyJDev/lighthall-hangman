@@ -11,9 +11,6 @@ const Popup = ({correctLetters, wrongLetters, selectedWord, setPlayable, playAga
   const winningStatus = checkWin(correctLetters, wrongLetters, selectedWord);
 
   if (correctLetters.length > 0 && winningStatus === 'win') {
-    finalMessage = 'Congratulations! You won! 😃';
-    playable = false;
-
     // Update user's wins in the database
     const updateWins = async () => {
       const userQuery = query(collection(db, 'users'), where('name', '==', name));
@@ -23,8 +20,13 @@ const Popup = ({correctLetters, wrongLetters, selectedWord, setPlayable, playAga
       const user = (await getDoc(userDoc)).data();
       await updateDoc(userDoc, { wins: user.wins + 1 });
     }
-
     updateWins();
+  }
+
+  if ( winningStatus === 'win') {
+    finalMessage = 'Congratulations! You won! 😃';
+    playable = false;
+
   } else if (winningStatus === 'lose') {
     finalMessage = 'Unfortunately you lost. 😕';
     finalMessageRevealWord = `...the word was: ${selectedWord}`;
