@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { db } from "../../firebase-config.js";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { useNavigate, createSearchParams } from "react-router-dom";
-
-import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 
