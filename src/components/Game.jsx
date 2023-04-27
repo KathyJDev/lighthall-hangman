@@ -11,6 +11,7 @@ import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebase-config.js";
 import { doc, getDoc } from "firebase/firestore";
 import Modal from "./Modal";
+import { toast } from "react-toastify";
 
 const words = [
   "monitor",
@@ -25,6 +26,17 @@ const words = [
   "interface",
   "wizard",
 ];
+
+const hints = {
+  monitor: "A device used to display images or video",
+  program: "A set of instructions that a computer follows",
+  application: "A software designed to perform a specific function",
+  keyboard: "An input device used for typing characters",
+  javascript: "A programming language used to create interactive web pages",
+  gaming: "The activity of playing video games",
+  network: "A group of interconnected devices that communicate with each other",
+  interface: "The means by which a user interacts with a computer",
+};
 //let selectedWord = words[Math.floor(Math.random() * words.length)];
 
 const Game = () => {
@@ -130,17 +142,23 @@ const Game = () => {
         ""
       ) : (
         <>
-          <button>
-            <Link
-              to="/leaderboard"
-              state={{
-                name,
-              }}
-            >
-              View Leaderboard
-            </Link>
-          </button>
-          <button onClick={toggleModal}>Challenge a Friend!</button>
+          <div style={{ display: "flex", gap: "20px" }}>
+            <button>
+              <Link
+                to="/leaderboard"
+                state={{
+                  name,
+                }}
+              >
+                View Leaderboard
+              </Link>
+            </button>
+            <button onClick={toggleModal}>Challenge a Friend!</button>
+          </div>
+          <button onClick={() => {
+            toast.info(hints[selectedWord]);
+          }}>Hint</button>
+
           <div style={{ display: isOpened === false && "none" }}>
             <Modal onClose={toggleModal} />
           </div>
