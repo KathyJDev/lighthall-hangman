@@ -3,7 +3,7 @@ import { checkWin } from '../helpers/helpers';
 import { db } from '../../firebase-config.js';
 import { collection, query, where, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 
-const Popup = ({correctLetters, wrongLetters, selectedWord, setPlayable, playAgain, name}) => {
+const Popup = ({correctLetters, wrongLetters, selectedWord, setPlayable, playAgain, name, id}) => {
   let finalMessage = '';
   let finalMessageRevealWord = '';
   let playable = true;
@@ -45,7 +45,7 @@ const Popup = ({correctLetters, wrongLetters, selectedWord, setPlayable, playAga
       <div className="popup">
         <h2>{finalMessage}</h2>
         <h3>{finalMessageRevealWord}</h3>
-        <button onClick={playAgain}>Play Again</button>
+        <button onClick={playAgain}>{id ? "Join Us" : "Play Again"}</button>
       </div>
     </div>
   );
