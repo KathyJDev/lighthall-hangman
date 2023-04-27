@@ -18,6 +18,7 @@ const Popup = ({
   setPlayable,
   playAgain,
   name,
+  id,
 }) => {
   let finalMessage = "";
   let finalMessageRevealWord = "";
@@ -63,7 +64,7 @@ const Popup = ({
       <div className="popup">
         <h2>{finalMessage}</h2>
         <h3>{finalMessageRevealWord}</h3>
-        <button onClick={playAgain}>Play Again</button>
+        <button onClick={playAgain}>{id ? "Join Us" : "Play Again"}</button>
       </div>
     </div>
   );
