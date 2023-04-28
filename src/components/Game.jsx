@@ -184,9 +184,13 @@ const Game = () => {
             </button>
             <button onClick={toggleModal}>Challenge a Friend!</button>
           </div>
-          <button onClick={() => {
-            toast.info(hints[selectedWord]);
-          }}>Hint</button>
+          <div style={{ display: "flex", gap: "20px" }}>
+            <button onClick={() => {
+              toast.info(hints[selectedWord]);
+            }}>Hint</button>
+            <button><Link to="/">Back to Homepage</Link></button>
+          </div>
+
 
 
           <div style={{ display: isOpened === false ? "none" : "" }}>

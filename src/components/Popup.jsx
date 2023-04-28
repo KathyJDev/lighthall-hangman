@@ -3,7 +3,7 @@ import { checkWin } from '../helpers/helpers';
 import { db } from '../../firebase-config.js';
 import { collection, query, where, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 
-const Popup = ({correctLetters, wrongLetters, selectedWord, setPlayable, playAgain, name, id}) => {
+const Popup = ({ correctLetters, wrongLetters, selectedWord, setPlayable, playAgain, name, id }) => {
   let finalMessage = '';
   let finalMessageRevealWord = '';
   let playable = true;
@@ -23,7 +23,7 @@ const Popup = ({correctLetters, wrongLetters, selectedWord, setPlayable, playAga
     updateWins();
   }
 
-  if ( winningStatus === 'win') {
+  if (correctLetters.length > 0 && winningStatus === 'win') {
     finalMessage = 'Congratulations! You won! 😃';
     playable = false;
 
