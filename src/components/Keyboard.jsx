@@ -14,15 +14,16 @@ const Keyboard = (props) => {
 
   return (
     <div className="keyboard">
-      {letters.map((letter, index) => {
+      {letters.map((letter) => {
         return (
           <button
-            onClick={(letter) => {
-              props.clicked(letter);
+            onClick={() => {
+              props.clicked(letter.charCodeAt(0));
             }}
-            className="keyboard-btn"
+            className={props.correctLetters.includes(letter) ? "keyboard-btn active" : props.wrongLetters.includes(letter) ? "keyboard-btn inactive" : "keyboard-btn"}
+            key={letter}
             name={letter}
-            value={letter}
+            id={letter.charCodeAt(0)}
           >
             {letter}
           </button>
