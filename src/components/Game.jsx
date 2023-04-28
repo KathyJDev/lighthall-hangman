@@ -74,6 +74,28 @@ const Game = () => {
     fetchUserWord();
   }, [id]);
   const navigate = useNavigate();
+
+  // for onscreen keyboard buttons
+  function handleClick(letterCode) {
+    if (playable) {
+      const letter = String.fromCharCode(letterCode);
+      if (selectedWord.includes(letter)) {
+        if (!correctLetters.includes(letter)) {
+          setCorrectLetters((currentLetters) => [...currentLetters, letter]);
+        } else {
+          show(setShowNotification);
+        }
+      } else {
+        if (!wrongLetters.includes(letter)) {
+          setWrongLetters((currentLetters) => [...currentLetters, letter]);
+        } else {
+          show(setShowNotification);
+        }
+      }
+    }
+  };
+
+  // for keyboard press
   useEffect(() => {
     const handleKeydown = (event) => {
       const { key, keyCode } = event;
@@ -128,6 +150,12 @@ const Game = () => {
         <Word selectedWord={selectedWord} correctLetters={correctLetters} />
       </div>
 
+      <Keyboard
+        clicked={handleClick}
+        correctLetters={correctLetters}
+        wrongLetters={wrongLetters}
+      />
+
       <Popup
         correctLetters={correctLetters}
         wrongLetters={wrongLetters}
@@ -138,6 +166,7 @@ const Game = () => {
         id={id}
       />
       <Notification showNotification={showNotification} />
+
       {id ? (
         ""
       ) : (
@@ -159,7 +188,8 @@ const Game = () => {
             toast.info(hints[selectedWord]);
           }}>Hint</button>
 
-          <div style={{ display: isOpened === false && "none" }}>
+
+          <div style={{ display: isOpened === false ? "none" : "" }}>
             <Modal onClose={toggleModal} />
           </div>
         </>

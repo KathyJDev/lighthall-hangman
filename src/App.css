@@ -9,10 +9,10 @@ body, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
   margin: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   text-align: center;
 }
 
@@ -59,7 +59,7 @@ h1 {
 .word {
   display: flex;
   position: absolute;
-  bottom: 10px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -125,10 +125,11 @@ a{
 
 .notification-container {
   background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 10px 10px 0 0;
+  /* border-radius: 10px 10px 0 0; */
   padding: 15px 20px;
-  position: absolute;
-  bottom: -50px;
+  position: fixed;
+  top: 0;
+  display: none;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -137,9 +138,13 @@ a{
 }
 
 .notification-container.show {
-  transform: translateY(-50px);
+  display: block;
+  /* transform: translateY(150px); */
 }
 
+.figure svg{
+  margin-bottom: 30px;
+}
 
 /* Leaderboard css */
 .leaderboard{
@@ -173,15 +178,36 @@ a{
 
 /* Keyboard css */
 .keyboard{
-  width: 60%;
-  margin: 50px;
+  width: 70%;
+  margin: 30px;
 }
 
-.keyboard-btn{
-  padding: 15px 20px;
-  font-size: 16px;
-  font-weight: bolder;
-  margin: 2px;
+
+.keyboard-btn {
+  width: 70px;
+  height: 50px;
+  border: 3px solid black;
+  background: none;
+  font-size: 1rem;
+  text-transform: uppercase;
+  padding: .5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  margin: 5px;
+}
+
+.keyboard-btn.active {
+  background-color: #2980b9;
+  color: white;
+}
+
+.keyboard-btn.inactive {
+  opacity: .3;
+}
+
+.keyboard-btn:hover:not(:disabled){
+  background-color: #2980b9
 }
 
 /* Home page */
@@ -272,5 +298,5 @@ a{
 }
 
 .Toastify__toast-body {
-  width: 500px;
+  width: 600px;
 }
